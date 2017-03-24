@@ -1,3 +1,5 @@
+;http://wiki.osdev.org/Real_mode_assembly_I
+
 bits 16
 org 0x7c00
 jmp 0x0:start
@@ -33,4 +35,5 @@ keypress:
     	cmp al, ' '
     	je reset
 	jmp keypress
-;teste
+
+
