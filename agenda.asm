@@ -33,7 +33,4 @@ keypress:
     	cmp al, ' '
     	je reset
 	jmp keypress
-
-
-
-
+;teste
