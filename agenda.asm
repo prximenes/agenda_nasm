@@ -7,13 +7,12 @@ jmp 0x0:start
 data:
  
 start:
-xor ax,ax
-mov ds,ax
-mov es, ax
-mov ss,ax
-mov sp,0X7C00 ; pilha comeca em 0x7c00
-
-jmp start
+	xor ax,ax
+	mov ds,ax
+	mov es, ax
+	mov ss,ax ;set up the stack
+	mov sp,0X7C00 ; pilha comeca em 0x7c00
+	jmp start
 
 times 510-($-$$) db 0
 dw 0xAA55
@@ -32,8 +31,8 @@ keypress:
    	int 16h
 	mov ah, 00h
    	int 16h
-    	cmp al, ' '
-    	je reset
+    cmp al, ' '
+    je reset
 	jmp keypress
 ;comment
 
