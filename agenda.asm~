@@ -1,5 +1,4 @@
 ;http://wiki.osdev.org/Real_mode_assembly_I
-;oi mundo
 
 bits 16
 org 0x7c00
@@ -37,4 +36,3 @@ keypress:
 	jmp keypress
 ;comment
 
-;test
