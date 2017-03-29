@@ -1,6 +1,10 @@
 ;http://wiki.osdev.org/Real_mode_assembly_I
 ;oi mundo
-;oi mundo 
+;oi mundo 222222
+
+
+
+;aaaaaaaAS
 bits 16
 org 0x7c00
 jmp 0x0:start
