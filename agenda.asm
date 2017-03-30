@@ -1,4 +1,6 @@
 ;http://wiki.osdev.org/Real_mode_assembly_I
+;linha nova
+;oi
 
 bits 16
 org 0x7c00
