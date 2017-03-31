@@ -18,6 +18,7 @@ struc   contato
 	nome:	resw	10
 	telefone:	resd	10 ;tem que checar quantos bytes precisa
 	grup:	resb	10
+	email:	resw	10
 	valid_bit:	resb	1
 endstruc
 
@@ -98,7 +99,9 @@ loop_principal:
 
 	mov si, buffer
    	cmp byte [si], 0  ; blank line?
-   	je get_name      ; yes, ignasnore it\
+   	je get_name      ; yes, ignasnore it
+
+
 
 
 
