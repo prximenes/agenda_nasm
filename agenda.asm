@@ -16,7 +16,7 @@ org 0x7c00
 
 struc   contato
 	nome:	resw	10
-	telefone:	resd	10
+	telefone:	resd	10 ;tem que checar quantos bytes precisa
 	grup:	resb	10
 endstruc
 	
