@@ -84,6 +84,25 @@ loop_principal:
  	mov si, cadastrar
    	call print_string
 
+   	mov si, pular_linha
+   	call print_string
+
+   	mov si, type_nome
+   	call print_string
+   	jmp get_name
+
+   	.get_name:
+   	mov di, buffer
+	call get_string
+
+	mov si, buffer
+   	cmp byte [si], 0  ; blank line?
+   	je get_name      ; yes, ignasnore it
+
+   	
+
+
+
  	jmp loop_principal
 
 .cmd_buscar:
@@ -119,7 +138,9 @@ loop_principal:
 
 ;db
 prompt db '>', 0
+type_nome db 'Digite o nome', 0X0D, 0X0A, 0
 agenda_ db 'ola sejam bem vindos a agenda!', 0X0D, 0X0A, 0
+pular_linha db 0X0D, 0X0A, 0
 cadastrar db 'cadastrar', 0
 buscar db 'buscar', 0
 editar_contato db 'editar',0	
