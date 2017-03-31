@@ -14,11 +14,11 @@ org 0x7c00
 	mov si, agenda_
 	call print_string
 
-Contato struc 
-	nome dw 100
-	telefone dw 10 ; aparentemente é como se faz uma struct em assembly
-	grupo dw 10
-ends Contato
+struc   contato
+	nome:	resw	10
+	telefone:	resd	10
+	grup:	resb	10
+endstruc
 	
 loop_principal:
 	mov si, prompt
