@@ -1,3 +1,4 @@
+
 ;http://wiki.osdev.org/Real_mode_assembly_I
 ;linha nova
 ;oi
@@ -12,6 +13,12 @@ org 0x7c00
 
 	mov si, agenda_
 	call print_string
+
+Contato struc 
+	nome dw 100
+	telefone dw 10 ; aparentemente é como se faz uma struct em assembly
+	grupo dw 10
+ends Contato
 	
 loop_principal:
 	mov si, prompt
