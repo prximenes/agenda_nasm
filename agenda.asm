@@ -18,6 +18,7 @@ struc   contato
 	nome:	resw	10
 	telefone:	resd	10 ;tem que checar quantos bytes precisa
 	grup:	resb	10
+	valid_bit:	resb	1
 endstruc
 
 ;https://www.csee.umbc.edu/courses/undergraduate/313/spring05/burt_katz/lectures/Lect10/structuresInAsm.html
@@ -97,9 +98,8 @@ loop_principal:
 
 	mov si, buffer
    	cmp byte [si], 0  ; blank line?
-   	je get_name      ; yes, ignasnore it
+   	je get_name      ; yes, ignasnore it\
 
-   	
 
 
 
