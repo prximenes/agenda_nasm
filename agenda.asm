@@ -19,6 +19,8 @@ struc   contato
 	telefone:	resd	10 ;tem que checar quantos bytes precisa
 	grup:	resb	10
 endstruc
+
+;https://www.csee.umbc.edu/courses/undergraduate/313/spring05/burt_katz/lectures/Lect10/structuresInAsm.html
 	
 loop_principal:
 	mov si, prompt
