@@ -91,7 +91,7 @@ loop_principal:
 
    	mov si, type_nome
    	call print_string
-   	jmp get_name
+   	jmp .get_name
 
    	.get_name:
    	mov di, buffer
@@ -99,7 +99,7 @@ loop_principal:
 
 	mov si, buffer
    	cmp byte [si], 0  ; blank line?
-   	je get_name      ; yes, ignasnore it
+   	je .get_name      ; yes, ignasnore it
 
 
 
