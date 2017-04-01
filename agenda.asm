@@ -1,8 +1,3 @@
-
-;http://wiki.osdev.org/Real_mode_assembly_I
-;linha nova
-;oi
-
 bits 16
 org 0x7c00
 	xor ax,ax
@@ -21,8 +16,6 @@ struc   contato
 	email:	resw	10
 	valid_bit:	resb	1
 endstruc
-
-;https://www.csee.umbc.edu/courses/undergraduate/313/spring05/burt_katz/lectures/Lect10/structuresInAsm.html
 	
 loop_principal:
 	mov si, prompt
@@ -36,42 +29,42 @@ loop_principal:
    	je loop_principal      ; yes, ignasnore it
 
    	mov si, buffer
-   	mov di, cadastrar  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, cadastrar  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_cadastrar
 
    	;xor di,di
 
    	mov si, buffer
-   	mov di, buscar  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, buscar  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_buscar
 
    	;xor di,di
 
    	mov si, buffer
-   	mov di, editar_contato  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, editar_contato  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_editar
 
    	;xor di,di
 
    	mov si, buffer
-   	mov di, deletar_contato  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, deletar_contato  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_deletar
 
    	;xor di,di
 
    	mov si, buffer
-   	mov di, listar_grupos  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, listar_grupos  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_listarg
 
    	;xor di,di
 
    	mov si, buffer
-   	mov di, listar_contatos  ; "hi" command // aqui que ele vai pra área do código em respeito ao comando
+   	mov di, listar_contatos  ; aqui que ele vai pra área do código em respeito ao comando
    	call strcmp
    	jc .cmd_listarc
 
@@ -247,4 +240,4 @@ get_string:
 
 
    times 510-($-$$) db 0
-   dw 0AA55h ; some BIOSes require this signature
+   dw 0AA55h ; assinatura de boot
