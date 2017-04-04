@@ -1,14 +1,6 @@
 ;bits 16
-org 0x7c00
+org 0x500
 jmp 0x0000:loop_principal
-	xor ax,ax
-	mov ds,ax
-	mov es, ax
-	mov ss,ax ;set up the stack
-	mov sp,0X7C00 ; pilha comeca em 0x7c00
-
-	mov si, agenda_
-	call print_string
 
 struc   contato
 	.nome:	resw	10
@@ -199,6 +191,15 @@ procuraString:;essa funcao basicamente procura as strings que estão no array + 
       ret
 	
 loop_principal:
+	xor ax,ax
+	mov ds,ax
+	mov es, ax
+	mov ss,ax ;set up the stack
+	mov sp,0X7C00 ; pilha comeca em 0x7c00
+
+	mov si, agenda_
+	call print_string
+
 	mov si, prompt
 	call print_string
 
