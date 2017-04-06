@@ -19,7 +19,6 @@ telefone.size EQU 11
 email.size EQU 21
 
 array: times contato.size*5 db 0
-aux: times 21 db 0
 
 %macro readString 2
    push bx
@@ -197,6 +196,9 @@ loop_principal:
 	mov ss,ax ;set up the stack
 	mov sp,0X7C00 ; pilha comeca em 0x7c00
 
+	mov si,breakline
+	call print_string
+
 	mov si, agenda_
 	call print_string
 
@@ -209,6 +211,8 @@ loop_principal:
 	mov si, buffer
    	cmp byte [si], 0  ; blank line?
    	je loop_principal      ; yes, ignasnore it
+
+   	pop ax
 
    	mov si, buffer
    	mov di, cadastrar  ; aqui que ele vai pra área do código em respeito ao comando
@@ -264,9 +268,6 @@ cmd_cadastrar:
    	mov si, pular_linha
    	call print_string
 
-   	mov si, type_nome
-   	call print_string
-
     mov cx, agenda.size ;cx recebe o tamanho agenda.size = 5, ou seja podemos ter 5 pessoas
    	xor bx, bx ; zera bx
 
@@ -310,9 +311,29 @@ cmd_cadastrar:
  	jmp loop_principal
 
 cmd_buscar:
-	;area do cod...
-	mov si, buscar
-  	call print_string
+;area do cod...2
+  mov si, nome
+  call print_string
+
+  readString aux, 20
+  printString breakline
+  find contato.nome, 20
+
+  cmp al, 1
+  je contato_encontrado
+
+  printString not_found
+  jmp endb
+
+  contato_encontrado:
+    printString encontrado
+   
+    lea ax, [(array + bx) + contato.nome]
+    printString ax
+
+    endb:
+    zerar aux, nome.size-1
+    jmp loop_principal
 	
 	jmp loop_principal
 
@@ -342,8 +363,7 @@ cmd_listarc:
 
 ;db
 prompt db '>', 0
-type_nome db 'Digite o nome', 0X0D, 0X0A, 0
-agenda_ db 'ola sejam bem vindos a agenda!', 0X0D, 0X0A, 0
+agenda_ db 'ola sejam bem vindos a agenda!', 0X0D, 0X0A, 'digite o comando respectivo',0X0D,0X0A, 0
 pular_linha db 0X0D, 0X0A, 0
 cadastrar db 'cadastrar', 0
 buscar db 'buscar', 0
@@ -359,6 +379,9 @@ grupo db 'Digite o grupo: ', 0
 telefone db 'Digite o telefone: ', 0
 email db 'Digite o email: ', 0
 sucesso db 'Sucess!', 0
+aux times 21 db 0
+not_found db 'contato não encontrado', 0
+encontrado db 'contato encontrado: ', 0
 
 buffer times 64 db 0
 
@@ -370,6 +393,7 @@ print_string:
 	jz .done   ; if the result is zero, get out
  
 	mov ah, 0x0E
+	mov bl, 5
 	int 0x10      ; otherwise, print out the character!
  
 	jmp print_string
@@ -456,5 +480,5 @@ get_string:
 
 
 
-   times 1390-($-$$) db 0
+   ;times 1390-($-$$) db 0
    dw 0AA55h ; assinatura de boot
