@@ -3,12 +3,12 @@ jmp 0x0000:__start
 
 dados:
 	comandos: db '--- Comandos disponiveis  ---', 13,10,0
-    cadastro: db '0: Cadastrar = cad', 13, 10, 0
-    busca: db '1: Buscar = busca', 13, 10, 0
-    editar: db '2: Editar = edit', 13, 10, 0
-    deletar: db '3: Deletar = del', 13, 10, 0
-    listgrup: db '4: Listar Grupos = lg', 13, 10, 0
-    listgrupcont: db '5: Listar Contatos do Grupo = lgc', 13, 10, 0
+    cadastro: db 'Cadastrar = cad', 13, 10, 0
+    busca: db 'Buscar = busca', 13, 10, 0
+    editar: db 'Editar = edit', 13, 10, 0
+    deletar: db 'Deletar = del', 13, 10, 0
+    listgrup: db 'Listar Grupos = lg', 13, 10, 0
+    listgrupcont: db 'Listar Contatos do Grupo = lgc', 13, 10, 0
     agenda: db '____ Ola! Seja Bem vindo a agenda! ____', 13,10,0
     espaco: db '', 13, 10, 0
 
