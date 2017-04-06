@@ -22,7 +22,7 @@ file = $(bootdisk)
 all: clean mydisk boot1 write_boot1 boot2 write_boot2 hexdump launchqemu
 
 mydisk:
-	dd if=/dev/zero of=$(bootdisk) bs=$(blocksize) count=$(disksize) status=noxfer
+	dd if=/dev/zero of=$(bootdisk) bs=$(blocksize) count=$(disksize)
 
 boot1:
 	nasm $(ASMFLAGS) $(boot1).asm -o $(boot1).bin
@@ -31,10 +31,10 @@ boot2:
 	nasm $(ASMFLAGS) $(boot2).asm -o $(boot2).bin
 
 write_boot1:
-	dd if=$(boot1).bin of=$(bootdisk) bs=$(blocksize) count=1 conv=notrunc status=noxfer
+	dd if=$(boot1).bin of=$(bootdisk) bs=$(blocksize) count=1 conv=notrunc
 
 write_boot2:
-	dd if=$(boot2).bin of=$(bootdisk) bs=$(blocksize) seek=$(boot2pos) count=$(boot2size) conv=notrunc status=noxfer
+	dd if=$(boot2).bin of=$(bootdisk) bs=$(blocksize) seek=$(boot2pos) count=$(boot2size) conv=notrunc 
 
 hexdump:
 	hexdump $(file)
