@@ -338,16 +338,132 @@ cmd_buscar:
 	jmp loop_principal
 
 cmd_editar:
-	mov si, editar_contato
-  	call print_string
-	
-	jmp loop_principal
+   printString nome
+   readString aux, 20
+
+   find contato.nome, 20
+
+   cmp al, 1 ;mesma coisa, caso ele achou a string
+   je e1
+
+   printString breakline
+   printString not_found;se nao achou imprime
+   jmp ende
+
+   e1:   
+      printString breakline
+      printString breakline
+      printString editnome
+      readString aux, 1
+      
+      cmp byte[aux], 73h
+      jne e2
+
+      lea ax, [(array + bx) + contato.nome]
+      
+      zerar ax, 20
+      printString breakline
+      printString nome
+
+      lea ax, [(array + bx) + contato.nome]
+
+      readString ax, 20
+      printString breakline
+      printString sucesso
+   
+   e2:
+      printString breakline
+      printString editgrupo
+      readString aux, 1
+      
+      cmp byte[aux], 73h
+      jne e3
+
+      lea ax, [(array + bx) + contato.grup]
+
+      zerar ax, 10
+      printString breakline
+      printString grupo
+
+      lea ax, [(array + bx) + contato.grup]
+
+      readString ax, 10
+      printString breakline
+      printString sucesso
+
+   e3:
+      printString breakline
+      printString editfone
+      readString aux, 1
+
+      cmp byte[aux], 73h
+      jne e4
+
+      lea ax, [(array + bx) + contato.telefone]
+
+      zerar ax, 10
+      printString breakline
+      printString telefone
+
+      lea ax, [(array + bx) + contato.telefone]
+
+      readString ax, 10
+      printString breakline
+      printString sucesso
+
+   e4:
+      printString breakline
+      printString editemail
+      readString aux, 1
+      
+      cmp byte[aux], 73h
+      jne ende
+
+      lea ax, [(array + bx) + contato.email]
+
+      zerar ax, 20
+      printString breakline
+      printString email
+
+      lea ax, [(array + bx) + contato.email]
+
+      readString ax, 20
+      printString breakline
+      printString sucesso
+
+   ende:
+      printString breakline
+      zerar aux, 20
+      jmp loop_principal
 
 cmd_deletar:
-	mov si, deletar_contato
-  	call print_string
-	
-	jmp loop_principal
+  mov si, nome
+  call print_string
+  readString aux, 20
+  printString breakline
+  find contato.nome, 20
+
+  cmp al, 1
+  je .delete
+
+  printString not_found
+  jmp endd
+
+  .delete:
+    lea ax, [array + bx]
+
+    mov cx, contato.grup
+    add cx, ax
+
+    mov word[end_aux], cx
+    ;call removerDoGrupo ; implementar essa
+
+    zerar ax, contato.size
+    printString deletado
+
+  endd:
+    zerar aux, nome.size-1
+    jmp loop_principal
 
 cmd_listarg:
 	mov si, listar_grupos
@@ -358,7 +474,11 @@ cmd_listarg:
 	jmp loop_principal
 
 cmd_listarc:
+<<<<<<< HEAD
 	mov si, listar_contatos_ui
+=======
+  mov si, listar_contatos_ui
+>>>>>>> f909073619e998bcca48c7a0e480e1bffe50ace2
   call print_string
   readString aux, 20
 
@@ -388,9 +508,17 @@ grupo db 'Digite o grupo: ', 0
 telefone db 'Digite o telefone: ', 0
 email db 'Digite o email: ', 0
 sucesso db 'Sucess!', 0
+end_aux: dw 0
 aux times 21 db 0
-not_found db 'contato não encontrado', 0
+not_found db 'contato nao encontrado', 0
 encontrado db 'contato encontrado: ', 0
+editnome db 'editar nome? ', 0
+deletado db 'Contato deletado! ', 0
+editfone db 'editar fone? ', 0
+editgrupo db 'editar grupo? ', 0
+editemail db 'editar email?', 0
+erroContato db 'contato nao encontrado'
+listar_contatos_ui db 'Qual grupo voce deseja buscar? ', 0
 
 buffer times 64 db 0
 
