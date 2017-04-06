@@ -515,7 +515,6 @@ editfone db 'editar fone? ', 0
 editgrupo db 'editar grupo? ', 0
 editemail db 'editar email?', 0
 erroContato db 'contato nao encontrado'
-listar_contatos_ui db 'Qual grupo voce deseja buscar? ', 0
 
 buffer times 64 db 0
 
