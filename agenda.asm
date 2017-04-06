@@ -655,11 +655,11 @@ aux times 21 db 0
 not_found db 'contato nao encontrado', 0
 encontrado db 'contato encontrado: ', 0
 sim_nao db 'Digite "S" para sim e "N" para não', 0
-editnome db 'editar nome? ', 0
+editnome db 'editar nome? [s/n] ', 0
 deletado db 'Contato deletado! ', 0
-editfone db 'editar fone? ', 0
-editgrupo db 'editar grupo? ', 0
-editemail db 'editar email?', 0
+editfone db 'editar fone? [s/n] ', 0
+editgrupo db 'editar grupo? [s/n] ', 0
+editemail db 'editar email? [s/n] ', 0
 erroContato db 'contato nao encontrado'
 listar_contatos_ui db 'Qual grupo voce deseja buscar? ', 0
 nogrupos db 'nao encontrou grupos', 0
