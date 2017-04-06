@@ -474,11 +474,8 @@ cmd_listarg:
 	jmp loop_principal
 
 cmd_listarc:
-<<<<<<< HEAD
+
 	mov si, listar_contatos_ui
-=======
-  mov si, listar_contatos_ui
->>>>>>> f909073619e998bcca48c7a0e480e1bffe50ace2
   call print_string
   readString aux, 20
 
