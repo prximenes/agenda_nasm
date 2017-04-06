@@ -11,6 +11,130 @@ struc   contato
 	.size:
 endstruc
 
+struc grupos
+	.nome: resb 11
+	.quantidade: resw 1
+	.size:
+endstruc
+
+%macro zerar 2
+	mov di, %1
+	mov cx, %2
+	call fill
+%endmacro
+
+%macro strcpy 2	;macro para copia de string de memoria para memoria:	%1-DEST	%2-SOUR
+	mov di, %1
+	mov si, %2
+	call copiaString
+%endmacro
+
+%macro strcmp 3	;macro para comparar strings:	%1-STR1 %2-STR2 %3-TAMANHO
+	; push cx
+	mov di, %1
+	mov si, %2
+	mov cx, %3
+	call strCompare
+	; pop cx
+%endmacro
+
+copiaString:
+	.p1:
+		mov al, byte[si]
+		mov byte[di], al
+		cmp al, 0
+		je .exit
+
+		inc si
+		inc di
+		jmp .p1
+	.exit:
+ret
+
+strCompare:	;salva em AL 0, para strings diferentes e 1 para strings iguais
+	cld
+	.p1:
+		cmpsb
+		jne .dif
+		loop .p1
+
+	mov al, 1	;strings iguais
+	jmp .exit
+
+	.dif:
+		mov al, 0	;strings diferentes
+	.exit:
+ret
+
+addParaGrupo:
+	push bx
+	mov byte[flag], 0
+	mov cx, agenda.size
+	mov bx, array_gp ;bx é o indice do vetor de grupos
+	
+	.start:
+		push cx
+		strcmp bx, word[end_aux], grupos.size-1
+		pop cx
+		cmp al, 0
+		je .p1
+
+		;se achou o grupo, incrementa o contador desse grupo e move 1 para a flag, indicando que achou um grupo
+		mov byte[flag], 1
+		.inc_qtd:
+		inc word[bx+grupos.quantidade]
+		jmp .sair
+
+		.p1:
+			add bx, grupos.size	;incrementa o indice no vetor da struct de grupos
+			loop .start
+
+		;adicona novo grupo no primeiro espaço vazio
+		mov bx, array_gp
+		cmp byte[bx], 0
+		je .p3 
+
+		.p2:
+			add bx, grupos.size
+			cmp byte[bx], 0
+			jne .p2
+
+		.p3:
+			strcpy bx, word[end_aux]
+			jmp .inc_qtd
+
+	.sair:
+	pop bx
+ret       
+
+removerDoGrupo:
+	push ax
+	push bx
+	mov cx, agenda.size
+	mov bx, array_gp;bx é o indice do vetor de grupos
+
+	.start:
+		push cx
+		strcmp bx, word[end_aux], grupos.size-1
+		pop cx
+		cmp al, 0
+		je .p1
+		
+		dec word[bx+grupos.quantidade]
+		cmp word[bx+grupos.quantidade], 0	;se a quantidade de contatos por grupo é zero, retira o grupo do vetor
+		jne .sair
+
+		zerar bx, grupos.size-1
+		jmp .sair
+
+		.p1:
+		add bx, grupos.size
+		loop .start
+
+	.sair:
+	pop bx
+	pop ax
+ret 
 
 agenda.size EQU 5
 nome.size EQU 21
@@ -19,7 +143,9 @@ telefone.size EQU 11
 email.size EQU 21
 
 array: times contato.size*5 db 0
-
+array_gp: times grupos.size*agenda.size db 0
+end_aux: dw 0
+flag: db 0
 %macro readString 2
    push bx
    mov di, %1
@@ -291,6 +417,7 @@ cmd_cadastrar:
       printString grupo
       lea ax, [(array + bx) + contato.grup] ;mesma coisa pros outros
       readString ax, grup.size-1
+      call addParaGrupo
 
       printString breakline
 
@@ -384,12 +511,14 @@ cmd_editar:
       zerar ax, 10
       printString breakline
       printString grupo
+      call removerDoGrupo
 
       lea ax, [(array + bx) + contato.grup]
 
       readString ax, 10
       printString breakline
       printString sucesso
+      call addParaGrupo
 
    e3:
       printString breakline
@@ -460,6 +589,7 @@ cmd_deletar:
 
     zerar ax, contato.size
     printString deletado
+    call removerDoGrupo
 
   endd:
     zerar aux, nome.size-1
@@ -492,13 +622,33 @@ cmd_delgrup:
 ret 
 
 cmd_listarg:
-	mov si, listar_grupos
-  	call print_string
-	
+	mov byte[flag], 0
+	mov cx, agenda.size
+	mov bx, array_gp
+
+	.p1:
+	cmp byte[bx], 0
+	je .incrementa
+	printString bx
+
+	printString breakline
+	mov byte[flag], 1
+
+	.incrementa:
+	add bx, grupos.size
+	loop .p1
+
+	cmp byte[flag], 1
+	je .exit
+	printString nogrupos
+	printString breakline
+	.exit:
 	jmp loop_principal
 
+
 cmd_listarc:
-    mov si, listar_contatos_ui
+
+	mov si, listar_contatos_ui
   call print_string
   readString aux, 20
 
@@ -518,7 +668,7 @@ buscar db 'buscar', 0
 editar_contato db 'editar',0	
 deletar_contato db 'deletar', 0
 listar_grupos db 'listarg', 0
-listar_contatos db 'listarc', 0
+listar_contatos db 'Listar Contatos do Grupo', 0
 badcommand db 'Bad command entered.', 0x0D, 0x0A, 0
 agendacheia db 'Agenda Cheia!', 13, 10, 0
 breakline db 13, 10, 0
@@ -527,7 +677,6 @@ grupo db 'Digite o grupo: ', 0
 telefone db 'Digite o telefone: ', 0
 email db 'Digite o email: ', 0
 sucesso db 'Sucess!', 0
-end_aux: dw 0
 aux times 21 db 0
 not_found db 'contato nao encontrado', 0
 encontrado db 'contato encontrado: ', 0
@@ -538,6 +687,7 @@ editgrupo db 'editar grupo? ', 0
 editemail db 'editar email?', 0
 erroContato db 'contato nao encontrado'
 listar_contatos_ui db 'Qual grupo voce deseja buscar? ', 0
+nogrupos db 'nao encontrou grupos', 0
 
 buffer times 64 db 0
 

@@ -34,6 +34,7 @@ write_boot1:
 	dd if=$(boot1).bin of=$(bootdisk) bs=$(blocksize) count=1 conv=notrunc
 
 write_boot2:
+	dd if=$(boot2).bin of=$(bootdisk) bs=$(blocksize) seek=$(boot2pos) count=$(boot2size) conv=notrunc 
 	dd if=$(boot2).bin of=$(bootdisk) bs=$(blocksize) seek=$(boot2pos) count=$(boot2size) conv=notrunc
 
 hexdump:

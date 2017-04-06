@@ -2,13 +2,14 @@ org 0x7c00
 jmp 0x0000:__start
 
 dados:
-    cadastro: db '0 - Cadastrar', 13, 10, 0
-    busca: db '1 - Buscar', 13, 10, 0
-    editar: db '2 - Editar', 13, 10, 0
-    deletar: db '3 - Deletar', 13, 10, 0
-    listgrup: db '4 - Listar Grupos', 13, 10, 0
-    listgrupcont: db '5 - Listar Contatos do Grupo', 13, 10, 0
-    exit: db '6 - Sair', 13, 10, 0
+	comandos: db '--- Comandos disponiveis ---', 13,10,0
+    cadastro: db '0: Cadastrar', 13, 10, 0
+    busca: db '1: Buscar', 13, 10, 0
+    editar: db '2: Editar', 13, 10, 0
+    deletar: db '3: Deletar', 13, 10, 0
+    listgrup: db '4: Listar Grupos', 13, 10, 0
+    listgrupcont: db '5: Listar Contatos do Grupo', 13, 10, 0
+    exit: db '6: Sair', 13, 10, 0
 
 __print:
     mov cl, 0
@@ -19,7 +20,7 @@ __print:
 
         mov ah, 0xe
         xor bh, bh
-        mov bl, 3
+        mov bl, 7
         int 10h
 
         jmp _p
@@ -38,8 +39,11 @@ __start:
 
     mov ah, 0xb
     mov bh, 0
-    mov bl, 15
+    mov bl, 0
     int 10h
+
+    mov si, comandos
+    call __print
 
     mov si, cadastro
     call __print
