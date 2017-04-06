@@ -356,10 +356,16 @@ cmd_listarg:
 	jmp loop_principal
 
 cmd_listarc:
-	mov si, listar_contatos
-  	call print_string
-	
-	jmp loop_principal
+	mov si, listar_contatos_ui
+  call print_string
+  readString aux, 20
+
+  printString breakline
+
+  find contato.grup, 10
+
+  zerar aux, 20
+  jmp loop_principal
 
 ;db
 prompt db '>', 0
@@ -370,7 +376,8 @@ buscar db 'buscar', 0
 editar_contato db 'editar',0	
 deletar_contato db 'deletar', 0
 listar_grupos db 'listarg', 0
-listar_contatos db 'listarc', 0
+listar_contatos db 'Listar Contatos do Grupo', 0
+listar_contatos_ui db 'Qual grupo voce deseja buscar ? ', 0
 badcommand db 'Bad command entered.', 0x0D, 0x0A, 0
 agendacheia db 'Agenda Cheia!', 13, 10, 0
 breakline db 13, 10, 0
