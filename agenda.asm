@@ -585,7 +585,7 @@ cmd_deletar:
     add cx, ax
 
     mov word[end_aux], cx
-    call cmd_delgrup ; implementar essa
+    ;call removerDoGrupo ; implementar essa
 
     zerar ax, contato.size
     printString deletado
@@ -594,32 +594,6 @@ cmd_deletar:
   endd:
     zerar aux, nome.size-1
     jmp loop_principal
-
-cmd_delgrup:
-  push ax
-  push bx
-  mov cx, agenda.size
-  mov bx, array_gp;bx é o indice do vetor de grupos
-
-  .start:
-    push cx
-    strcmp bx, word[end_aux], grupo.size-1
-    pop cx
-    cmp al, 0
-    je .p1
-
-
-    zerar bx, grupo.size-1
-    jmp .sair
-
-    .p1:
-    add bx, grupos.size
-    loop .start
-
-  .sair:
-  pop bx
-  pop ax
-ret 
 
 cmd_listarg:
 	mov byte[flag], 0
@@ -661,7 +635,7 @@ cmd_listarc:
 
 ;db
 prompt db '>', 0
-agenda_ db 'ola sejam bem vindos a agenda!', 0X0D, 0X0A, 'digite o comando respectivo',0X0D,0X0A, 0
+agenda_ db '', 0X0D, 0X0A, 'Digite o comando desejado',0X0D,0X0A, 0
 pular_linha db 0X0D, 0X0A, 0
 cadastrar db 'cadastrar', 0
 buscar db 'buscar', 0
@@ -669,7 +643,7 @@ editar_contato db 'editar',0
 deletar_contato db 'deletar', 0
 listar_grupos db 'listarg', 0
 listar_contatos db 'Listar Contatos do Grupo', 0
-badcommand db 'Bad command entered.', 0x0D, 0x0A, 0
+badcommand db 'Comando inexistente.', 0x0D, 0x0A, 0
 agendacheia db 'Agenda Cheia!', 13, 10, 0
 breakline db 13, 10, 0
 nome db 'Digite o nome: ', 0
@@ -699,7 +673,7 @@ print_string:
 	jz .done   ; if the result is zero, get out
  
 	mov ah, 0x0E
-	mov bl, 5
+	mov bl, 15
 	int 0x10      ; otherwise, print out the character!
  
 	jmp print_string

@@ -9,7 +9,9 @@ dados:
     deletar: db '3: Deletar', 13, 10, 0
     listgrup: db '4: Listar Grupos', 13, 10, 0
     listgrupcont: db '5: Listar Contatos do Grupo', 13, 10, 0
+    agenda: db '____ Ola! Seja Bem vindo a agenda! ____', 13,10,0
     exit: db '6: Sair', 13, 10, 0
+    espaco: db '', 13, 10, 0
 
 __print:
     mov cl, 0
@@ -65,6 +67,12 @@ __start:
 
     mov si, exit
     call __print  
+
+    mov si, espaco
+    call __print
+
+    mov si, agenda
+    call __print
 
     xor bx, bx                                                                                
 
