@@ -476,7 +476,7 @@ cmd_editar:
    printString breakline
    printString not_found;se nao achou imprime
    jmp ende
-
+   
    e1:   
       printString breakline
       printString breakline
@@ -637,12 +637,12 @@ cmd_listarc:
 prompt db '>', 0
 agenda_ db '', 0X0D, 0X0A, 'Digite o comando desejado',0X0D,0X0A, 0
 pular_linha db 0X0D, 0X0A, 0
-cadastrar db 'cadastrar', 0
-buscar db 'buscar', 0
-editar_contato db 'editar',0	
-deletar_contato db 'deletar', 0
-listar_grupos db 'listarg', 0
-listar_contatos db 'Listar Contatos do Grupo', 0
+cadastrar db 'cad', 0
+buscar db 'busca', 0
+editar_contato db 'edit',0	
+deletar_contato db 'del', 0
+listar_grupos db 'lg', 0
+listar_contatos db 'lgc', 0
 badcommand db 'Comando inexistente.', 0x0D, 0x0A, 0
 agendacheia db 'Agenda Cheia!', 13, 10, 0
 breakline db 13, 10, 0
@@ -654,6 +654,7 @@ sucesso db 'Sucess!', 0
 aux times 21 db 0
 not_found db 'contato nao encontrado', 0
 encontrado db 'contato encontrado: ', 0
+sim_nao db 'Digite "S" para sim e "N" para não', 0
 editnome db 'editar nome? ', 0
 deletado db 'Contato deletado! ', 0
 editfone db 'editar fone? ', 0
