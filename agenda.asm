@@ -348,6 +348,37 @@ cmd_deletar:
   	call print_string
 	
 	jmp loop_principal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+cmd_deletar:
+  mov si, nome
+  call print_string
+  readString aux, 20
+  printString breakline
+  find contato.nome, 20
+
+  cmp al, 1
+  je .delete
+
+  printString not_found
+  jmp endd
+
+  .delete:
+    lea ax, [array + bx]
+
+    mov cx, contato.grupo
+    add cx, ax
+
+    mov word[end_aux], cx
+    ;call removerDoGrupo ; implementar essa
+
+    zerar ax, contato.size
+    printString okdelete
+
+  endd:
+    zerar aux, nome.size-1
+    jmp loop_principal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 cmd_listarg:
 	mov si, listar_grupos
