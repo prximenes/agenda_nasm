@@ -503,7 +503,7 @@ email db 'Digite o email: ', 0
 sucesso db 'Sucess!', 0
 end_aux: dw 0
 aux times 21 db 0
-not_found db 'contato não encontrado', 0
+not_found db 'contato nao encontrado', 0
 encontrado db 'contato encontrado: ', 0
 editnome db 'editar nome? ', 0
 deletado db 'Contato deletado! ', 0
@@ -511,7 +511,7 @@ editfone db 'editar fone? ', 0
 editgrupo db 'editar grupo? ', 0
 editemail db 'editar email?', 0
 erroContato db 'contato nao encontrado'
-listar_contatos_ui db 'Qual grupo voce deseja buscar ? ', 0
+listar_contatos_ui db 'Qual grupo voce deseja buscar? ', 0
 
 buffer times 64 db 0
 
