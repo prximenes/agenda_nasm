@@ -456,7 +456,7 @@ cmd_deletar:
     add cx, ax
 
     mov word[end_aux], cx
-    ;call removerDoGrupo ; implementar essa
+    call cmd_delgrup ; implementar essa
 
     zerar ax, contato.size
     printString deletado
@@ -464,6 +464,32 @@ cmd_deletar:
   endd:
     zerar aux, nome.size-1
     jmp loop_principal
+
+cmd_delgrup:
+  push ax
+  push bx
+  mov cx, agenda.size
+  mov bx, array_gp;bx é o indice do vetor de grupos
+
+  .start:
+    push cx
+    strcmp bx, word[end_aux], grupo.size-1
+    pop cx
+    cmp al, 0
+    je .p1
+
+
+    zerar bx, grupo.size-1
+    jmp .sair
+
+    .p1:
+    add bx, grupos.size
+    loop .start
+
+  .sair:
+  pop bx
+  pop ax
+ret 
 
 cmd_listarg:
 	mov si, listar_grupos
